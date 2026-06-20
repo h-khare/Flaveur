@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct AuthCoordinatorView: View {
+    
+    // MARK: - Properties
+    @EnvironmentObject private var authPresentor: AuthCoordinatorPresentor
+    
+    // MARK: - Body
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack(path: $authPresentor.routes) {
+            authPresentor.build(.login)
+                .toolbar(.hidden, for: .navigationBar)
+                .navigationDestination(for: AuthRoutes.self) { route in
+                    authPresentor.build(route)
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+        }.environmentObject(authPresentor)
     }
 }
 

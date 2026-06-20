@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+
+public protocol AuthService{
+    func loginUser(payload: LoginEntityPayload) async throws -> UserDTO
+    func registerUser(payload: SignupEntityPayload) async throws -> UserDTO
+}

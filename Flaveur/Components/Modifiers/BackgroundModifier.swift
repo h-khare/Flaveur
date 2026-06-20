@@ -7,12 +7,23 @@
 
 import SwiftUI
 
-struct BackgroundModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct BackgroundModifier: ViewModifier {
+    @Environment(\.theme) var theme
 
-#Preview {
-    BackgroundModifier()
+    func body(content: Content) -> some View {
+        ZStack {
+            // Your Background Layer
+            theme.colors.background
+                .ignoresSafeArea()
+            
+            // Your Content Layer
+            content
+                // 1. Force the content view to fill the screen so it can be cleared
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // 2. Remove the default system background from Lists/Forms
+                .scrollContentBackground(.hidden)
+                // 3. Ensure the underlying hosting view is clear
+                .background(Color.clear)
+        }
+    }
 }

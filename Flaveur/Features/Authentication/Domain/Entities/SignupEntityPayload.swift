@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SignupEntityPayload: Encodable{
+public struct SignupEntityPayload: Encodable{
     
     let name: String
     let email: String

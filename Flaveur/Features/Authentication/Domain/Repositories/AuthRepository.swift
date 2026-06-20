@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol AuthRepository{
+    func login(credentials: LoginEntityPayload) async throws -> UserDTO
+    func registerUser(credentials: SignupEntityPayload) async throws -> UserDTO
+}

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct CuisinesPreferenceModel{
+    let id: Int
+    let name: String
+    let iamge: String
+    var isSelected: Bool = false
+}

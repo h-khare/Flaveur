@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+final class OnboardDIContainer: ObservableObject{
+    
+    //MARK: - Properties
+    lazy var onboardCoordinatorPresentor: OnboardCoordinatorPresentor = {
+        OnboardCoordinatorPresentor(onboardDIContainer: self)
+    }()
+    
+    lazy var makeFirstOnboardPresentor: OnBoardingPresentor = {
+        OnBoardingPresentor()
+    }()
+    
+    lazy var makePreferencePresentor: PreferencePresentor = {
+        PreferencePresentor()
+    }()
+    
+    //MARK: - functions
+}

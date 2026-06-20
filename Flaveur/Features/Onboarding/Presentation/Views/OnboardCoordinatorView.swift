@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct OnboardCoordinatorView: View {
+    
+    // MARK: - Properties
+    @EnvironmentObject var onboardCoordinatorPresentor: OnboardCoordinatorPresentor
+    
+    // MARK: - Body
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack(path: $onboardCoordinatorPresentor.routes) {
+            onboardCoordinatorPresentor.build(.onboardFirst)
+                .navigationDestination(for: OnboardRoute.self) { route in
+                    onboardCoordinatorPresentor.build(route)
+                        .navigationBarBackButtonHidden(true)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar(.hidden, for: .navigationBar)
+                }
+        }
+        .scrollContentBackground(.hidden)
     }
 }
 
-#Preview {
-    OnboardCoordinatorView()
-}

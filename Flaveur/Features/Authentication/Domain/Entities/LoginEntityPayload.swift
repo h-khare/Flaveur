@@ -1,5 +1,5 @@
 //
-//  LoginEntity.swift
+//  LoginEntityPayload.swift
 //  Flaveur
 //
 //  Created by mac on 24/05/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LoginEntity: Encodable{
+public struct LoginEntityPayload: Encodable{
     
     let email: String
     let password: String

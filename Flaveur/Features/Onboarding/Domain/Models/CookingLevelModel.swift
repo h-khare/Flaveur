@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct CookingLevelModel{
+    let id: Int
+    let name: String
+    let description: String
+    var isSelected: Bool = false
+}

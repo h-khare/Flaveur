@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+public enum StorageKeys: String, CaseIterable{
+    case isOnboard
+    case isLogin
+    case isMain
+}

@@ -1,5 +1,5 @@
 //
-//  ButtonView.swift
+//  AppButton.swift
 //  Flaveur
 //
 //  Created by mac on 05/04/26.
@@ -11,6 +11,7 @@ struct AppButton: View {
     
     //MARK: - Properties
     @Environment(\.theme) var theme
+    @Binding var isValidate: Bool
     var title: String
     var style: AppTextStyle = .recipeTitle
     var callback:(() -> Void)
@@ -25,6 +26,6 @@ struct AppButton: View {
                 .padding(.horizontal, 57)
                 .background(.primaryLight)
                 .clipShape(RoundedRectangle(cornerRadius: 30))
-        }
+        }.allowsHitTesting(isValidate)
     }
 }

@@ -17,6 +17,7 @@ public enum NetworkError: LocalizedError {
     case decodingFailed
     case encodingFailed
     case unauthorized
+    case validationFailed(String)
     case serverError(statusCode: Int)
     case requestFailed(Error)
     case unknown
@@ -27,6 +28,9 @@ public enum NetworkError: LocalizedError {
             
         case .invalidURL:
             return "Invalid URL."
+            
+        case .validationFailed(let data):
+            return  data
             
         case .invalidResponse:
             return "Invalid server response."

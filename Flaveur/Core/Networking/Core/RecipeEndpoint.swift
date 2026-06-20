@@ -10,8 +10,8 @@ import Foundation
 public enum RecipeEndpoint: Endpoint{
     
     //MARK: - AUTHENTICATION
-    case login
-    case register
+    case login(credentials: LoginEntityPayload)
+    case register(payload: SignupEntityPayload)
     
     // MARK: - Properties
     public var path: String{
@@ -29,6 +29,18 @@ public enum RecipeEndpoint: Endpoint{
             
         case .login, .register:
             return .POST
+        }
+    }
+    
+    // Pass the associated payload structures up to the RequestBuilder
+    public var body: Encodable? {
+        switch self {
+        case .login(let credentials):
+            return credentials
+        case .register(let payload):
+            return payload
+        default:
+            return nil
         }
     }
     
