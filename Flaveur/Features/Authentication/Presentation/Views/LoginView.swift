@@ -73,15 +73,14 @@ private extension LoginView {
             )
             
             AppTextField(
-                text: $presentor.email,
-                name: "Email",
-                placeholder: "Enter email here",
+                text: $presentor.password,
+                name: "Password",
+                placeholder: "Enter password here",
                 type: .email,
-                errorMessage: presentor.errors[.email],
+                errorMessage: presentor.errors[.password],
                 fieldIdentity: .email,
                 focusState: $activeField,
-                onNext: { activeField = .email },
-                onPrevious: { activeField = .password },
+                onPrevious: { activeField = .email },
                 isLastField: true
             )
         }
@@ -89,12 +88,22 @@ private extension LoginView {
     
     var loginButtonSection: some View {
         VStack(spacing: 12) {
-            AppButton(isValidate: $presentor.loginValidate, title: "Log In") {
-                Task{
-                    await presentor.callLoginAPI()
-                }
-            }
-            
+            AppButton(
+                        title: "Login",
+                        isValid: presentor.loginValidate,
+                        // Dynamic custom binding built on the fly from the global state enum!
+                        isLoading: Binding(
+                            get: { presentor.isLoading },
+                            set: { _ in } // Read-only from the view side
+                        ),
+                        style: .recipeTitle
+                    ) {
+                        Task {
+                            let result = await presentor.callLoginAPI()
+                            guard result else { return }
+                            appCoordinator.updateFlow(to: .MAIN)
+                        }
+                    }
             Button(action: {  }) {
                 AppText("Forgot Password?", style: .titleXtraSmall)
             }

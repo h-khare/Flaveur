@@ -14,7 +14,7 @@ enum LoginField {
 }
 
 // MARK: - LoginPresentor
-class LoginPresentor: ObservableObject {
+class LoginPresentor: BasePresentor<EmptyResponse> {
     
     // MARK: - Properties
     @Published var loginValidate: Bool = false
@@ -34,7 +34,8 @@ class LoginPresentor: ObservableObject {
     
     init(useCase: AuthUseCase) {
         self.useCase = useCase
-        setupValidationPipeline()
+        super.init()
+        self.setupValidationPipeline()
     }
     
     // MARK: - Functions
@@ -62,12 +63,28 @@ class LoginPresentor: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func callLoginAPI() async{
+    /// Calling login api by email or password.
+    ///
+    func callLoginAPI() async -> Bool{
         do{
+            state = .loading
             let result = try await useCase.login(credentials: LoginEntityPayload(email: email, password: password))
-            debugPrint(result)
+            state = .success(EmptyResponse())
+            saveUserDetails(user: result)
+            return true
         }catch{
-            
+            state = .error(error.localizedDescription)
+            return false
         }
+    }
+    
+    /// Save the user details into preference
+    ///
+    private func saveUserDetails(user: UserDTO) {
+        guard let currentUser = user.data?.user, let token = user.data?.accessToken, let refreshToken = user.data?.refreshToken else { return }
+        UserDefaultManager.shared.isLogin = true
+        UserDefaultManager.shared.save(currentUser, forKey: .userData)
+        UserDefaultManager.shared.save(token, forKey: .token)
+        UserDefaultManager.shared.save(refreshToken, forKey: .refreshToken)
     }
 }

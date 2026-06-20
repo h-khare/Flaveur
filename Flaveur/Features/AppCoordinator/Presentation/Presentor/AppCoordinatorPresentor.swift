@@ -37,9 +37,13 @@ final class AppCoordinatorPresentor:  ObservableObject{
     /// Checking Onboarding
     ///
     func checkOnboarding(){
-        if UserDefaultManager.shared.isOnboard{
+        if UserDefaultManager.shared.isOnboard && !UserDefaultManager.shared.isLogin{
             Task{
                 await updateFlow(to: .AUTH)
+            }
+        }else if UserDefaultManager.shared.isLogin{
+            Task{
+                await updateFlow(to: .MAIN)
             }
         }
     }

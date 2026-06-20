@@ -127,12 +127,21 @@ private extension SignUpView {
     var loginButtonSection: some View {
         VStack(spacing: 10){
             AppText("By continuing, you agree to \nTerms of Use and Privacy Policy.", style: .cookingTime, alignment: .center)
-            AppButton(isValidate: $presentor.isFormValid, title: "Sign Up") {
-                activeField = nil
-                Task{
-                    await presentor.registerUser()
-                }
-            }
+            AppButton(
+                        title: "Sign Up",
+                        isValid: presentor.isFormValid,
+                        // Dynamic custom binding built on the fly from the global state enum!
+                        isLoading: Binding(
+                            get: { presentor.isLoading },
+                            set: { _ in } // Read-only from the view side
+                        ),
+                        style: .recipeTitle
+                    ) {
+                        activeField = nil
+                        Task{
+                            await presentor.registerUser()
+                        }
+                    }
         }
     }
     

@@ -9,6 +9,9 @@ import Foundation
 
 public enum StorageKeys: String, CaseIterable{
     case isOnboard
-    case isLogin
     case isMain
+    case userData = "com.flaveur.storage.user.data"
+    case token = "com.flaveur.storage.user.token"
+    case refreshToken = "com.flaveur.storage.user.refreshToken"
+    case isLogin = "com.flaveur.storage.login.status"
 }

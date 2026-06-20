@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -122,11 +122,9 @@
 		04C74DB22F8BAF94005CA1E4 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C74DB12F8BAF94005CA1E4 /* SignUpView.swift */; };
 		04C74DB42F8BAFC3005CA1E4 /* SingUpPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C74DB32F8BAFC3005CA1E4 /* SingUpPresentor.swift */; };
 		04C74DB62F8BB2F6005CA1E4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C74DB52F8BB2F6005CA1E4 /* ForgotPasswordView.swift */; };
-		04CB23332FB88FB4007B49EE /* HarshNetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04CB23322FB88FB4007B49EE /* HarshNetworkKit */; };
-		04D704D62FB8E3C8009E13EB /* HarshNetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D704D52FB8E3C8009E13EB /* HarshNetworkKit */; };
-		04D704D92FB8E4FC009E13EB /* HarshNetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D704D82FB8E4FC009E13EB /* HarshNetworkKit */; };
-		04D704DC2FB8E6BD009E13EB /* HarshNetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D704DB2FB8E6BD009E13EB /* HarshNetworkKit */; };
 		04D704DF2FB8F08E009E13EB /* AuthEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D704DE2FB8F08E009E13EB /* AuthEndpoint.swift */; };
+		459E38262FE699570095A3C3 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E38252FE699570095A3C3 /* SessionRepository.swift */; };
+		459E38282FE6997A0095A3C3 /* SessionRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E38272FE6997A0095A3C3 /* SessionRepositoryImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -248,17 +246,19 @@
 		04C74DB32F8BAFC3005CA1E4 /* SingUpPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpPresentor.swift; sourceTree = "<group>"; };
 		04C74DB52F8BB2F6005CA1E4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		04D704DE2FB8F08E009E13EB /* AuthEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndpoint.swift; sourceTree = "<group>"; };
+		459E38252FE699570095A3C3 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
+		459E38272FE6997A0095A3C3 /* SessionRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepositoryImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		459E381F2FE68F150095A3C3 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		044833C72F5CA9FD005FC6EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D704D92FB8E4FC009E13EB /* HarshNetworkKit in Frameworks */,
-				04CB23332FB88FB4007B49EE /* HarshNetworkKit in Frameworks */,
-				04D704D62FB8E3C8009E13EB /* HarshNetworkKit in Frameworks */,
-				04D704DC2FB8E6BD009E13EB /* HarshNetworkKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +424,7 @@
 		044833DC2F5CBE23005FC6EC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				459E38292FE6A1050095A3C3 /* Main */,
 				0405BB9C2F818B4100CB2986 /* AppCoordinator */,
 				0405BB9A2F818B2A00CB2986 /* Authentication */,
 				044833DD2F5CBE3C005FC6EC /* Onboarding */,
@@ -624,6 +625,7 @@
 			isa = PBXGroup;
 			children = (
 				0487575E2FC242FD008E9378 /* AuthRepository.swift */,
+				459E38252FE699570095A3C3 /* SessionRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -651,6 +653,7 @@
 			isa = PBXGroup;
 			children = (
 				048757682FC24699008E9378 /* AuthRepsitoryImpl.swift */,
+				459E38272FE6997A0095A3C3 /* SessionRepositoryImpl.swift */,
 			);
 			path = RepositoryImpl;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 		04B35C572F5D4F370039122A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				459E381F2FE68F150095A3C3 /* View */,
 				043588342FAFA8AC00DBE9C8 /* OTP Verification */,
 				04BD22B42F8A6C0600BF5FBB /* TextField */,
 				04BAE3E62F828DB500C0511A /* Button */,
@@ -853,6 +857,13 @@
 			path = Endpoints;
 			sourceTree = "<group>";
 		};
+		459E38292FE6A1050095A3C3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -868,12 +879,11 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				459E381F2FE68F150095A3C3 /* View */,
+			);
 			name = Flaveur;
 			packageProductDependencies = (
-				04CB23322FB88FB4007B49EE /* HarshNetworkKit */,
-				04D704D52FB8E3C8009E13EB /* HarshNetworkKit */,
-				04D704D82FB8E4FC009E13EB /* HarshNetworkKit */,
-				04D704DB2FB8E6BD009E13EB /* HarshNetworkKit */,
 			);
 			productName = Flaveur;
 			productReference = 044833CA2F5CA9FD005FC6EC /* Flaveur.app */;
@@ -904,7 +914,6 @@
 			);
 			mainGroup = 044833C12F5CA9FD005FC6EC;
 			packageReferences = (
-				04D704DA2FB8E6BD009E13EB /* XCLocalSwiftPackageReference "../HarshNetworkKit" */,
 			);
 			productRefGroup = 044833CB2F5CA9FD005FC6EC /* Products */;
 			projectDirPath = "";
@@ -951,6 +960,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				459E38262FE699570095A3C3 /* SessionRepository.swift in Sources */,
 				04AF16852FC2E95C00356E1C /* AuthCoordinatorPresentor.swift in Sources */,
 				04AF16812FC2E53900356E1C /* AuthDIContainer.swift in Sources */,
 				04B35C392F5D4AFD0039122A /* LightColorPallete.swift in Sources */,
@@ -997,6 +1007,7 @@
 				048757532FC23CA8008E9378 /* AuthenticationInterceptor.swift in Sources */,
 				04638F1B2FC22017006CCAE4 /* NetworkService.swift in Sources */,
 				0487576D2FC246E2008E9378 /* AuthService.swift in Sources */,
+				459E38282FE6997A0095A3C3 /* SessionRepositoryImpl.swift in Sources */,
 				04AF16872FC30B8500356E1C /* ValidationRule.swift in Sources */,
 				0487576F2FC24742008E9378 /* AuthServiceImpl.swift in Sources */,
 				0487574F2FC22F06008E9378 /* ResponseInterceptor.swift in Sources */,
@@ -1185,8 +1196,7 @@
 				INFOPLIST_FILE = Flaveur/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1194,9 +1204,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.harsh.Flaveur;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1214,8 +1228,7 @@
 				INFOPLIST_FILE = Flaveur/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1223,9 +1236,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.harsh.Flaveur;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1251,32 +1268,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		04D704DA2FB8E6BD009E13EB /* XCLocalSwiftPackageReference "../HarshNetworkKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../HarshNetworkKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		04CB23322FB88FB4007B49EE /* HarshNetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HarshNetworkKit;
-		};
-		04D704D52FB8E3C8009E13EB /* HarshNetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HarshNetworkKit;
-		};
-		04D704D82FB8E4FC009E13EB /* HarshNetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HarshNetworkKit;
-		};
-		04D704DB2FB8E6BD009E13EB /* HarshNetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HarshNetworkKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 044833C22F5CA9FD005FC6EC /* Project object */;
 }

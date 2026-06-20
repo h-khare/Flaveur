@@ -5,6 +5,9 @@
 
 import SwiftUI
 
+/// A highly reusable, configurable, and design-system-compliant text input field.
+/// Supports normal text, secure entry (passwords), country-coded phone inputs, and inline date selection via sheets.
+/// Fully handles focus management routing optionally.
 struct AppTextField<ID: Hashable>: View {
     // MARK: - Reactive Field Properties
     @Binding var text: String
@@ -14,11 +17,13 @@ struct AppTextField<ID: Hashable>: View {
     var errorMessage: String?
     var countryCode: Binding<String>? = nil
     
-    // MARK: - Decoupled Focus Routing System (Now Completely Optional)
+    // MARK: - Focus Management Routing System
+    /// The specific identifier for this input instance within a focus chain sequence.
     let fieldIdentity: ID?
+    /// The external focus tracking state passed down from the parent container view.
     var focusState: FocusState<ID?>.Binding?
     
-    // MARK: - Optional Overlays & Callbacks
+    // MARK: - Navigation Overlays & Field Callbacks
     var isSheetPresented: Binding<Bool>?
     var onNext: (() -> Void)?
     var onPrevious: (() -> Void)?
@@ -35,7 +40,7 @@ struct AppTextField<ID: Hashable>: View {
     // MARK: - Layout Environment Hooks
     @Environment(\.theme) var theme
     
-    // MARK: - Flexible Initializer
+    // MARK: - Main Initializer
     init(
         text: Binding<String>,
         name: String,
@@ -64,7 +69,7 @@ struct AppTextField<ID: Hashable>: View {
         self.isLastField = isLastField
     }
     
-    // MARK: - Computed States
+    // MARK: - Computed States & Helpers
     private var isCurrentlyFocused: Bool {
         guard let focusState = focusState, let fieldIdentity = fieldIdentity else { return false }
         return focusState.wrappedValue == fieldIdentity
@@ -80,11 +85,13 @@ struct AppTextField<ID: Hashable>: View {
         return formatter
     }()
     
-    // MARK: - Body
+    // MARK: - Body View Layout
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
+            // Field Header Title Label
             AppText(name, style: .titleSmall, color: theme.colors.textHeading)
             
+            // Input Compound Row
             HStack(spacing: 8) {
                 fieldLayer
             }
@@ -98,6 +105,7 @@ struct AppTextField<ID: Hashable>: View {
                             .stroke(borderColor, lineWidth: 1)
                     )
             )
+            // Country Selection Picker Sheet Sheet Presenter Context
             .sheet(isPresented: $showCountryPicker) {
                 CountryPickerView(service: countryService) { country in
                     self.selectedCountry = country
@@ -106,6 +114,7 @@ struct AppTextField<ID: Hashable>: View {
                     }
                 }
             }
+            // Date Selection Flow Graphical Modal Presentation
             .sheet(isPresented: isSheetPresented ?? $showDatePicker) {
                 NavigationStack {
                     VStack {
@@ -151,7 +160,7 @@ struct AppTextField<ID: Hashable>: View {
         }
         .animation(.easeIn(duration: 0.15), value: isCurrentlyFocused)
         .animation(.easeIn(duration: 0.15), value: isDisplayingError)
-        // Toolbar only renders if focus state was actually supplied
+        // Auxiliary Keyboard Navigation Bar accessory configuration
         .toolbar {
             if isCurrentlyFocused {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -186,7 +195,7 @@ struct AppTextField<ID: Hashable>: View {
 
 // MARK: - Convenience Initialization for Non-Focused Standalone Fields
 extension AppTextField where ID == String {
-    /// Creates a lightweight standalone text field that doesn't participate in complex focus chains.
+    /// Creates a lightweight standalone text field that doesn't participate in complex focus chains layout frameworks.
     init(
         text: Binding<String>,
         name: String,
@@ -206,7 +215,7 @@ extension AppTextField where ID == String {
     }
 }
 
-// MARK: - Subviews Layout Extension
+// MARK: - Subviews Layout Extension Elements
 private extension AppTextField {
     var borderColor: Color {
         if isDisplayingError { return .red }
@@ -215,17 +224,20 @@ private extension AppTextField {
     
     @ViewBuilder
     var fieldLayer: some View {
+        // Appends prefix country picker flags if phone variation style is active
         if type == .phone {
             countrySelector
             verticalDivider
         }
         
         ZStack(alignment: .leading) {
+            // Native-like floating placeholder implementation layout structures
             if text.isEmpty {
                 AppText(placeholder, style: .titleHeading, color: theme.colors.textSecondary)
                     .allowsHitTesting(false)
             }
             
+            // Evaluates field layout behaviors by active underlying typing styles
             if type == .date {
                 Button {
                     focusState?.wrappedValue = nil
@@ -248,6 +260,7 @@ private extension AppTextField {
             }
         }
         
+        // Dynamic field input erasure element configuration
         if !text.isEmpty && !type.isSecure && type != .date {
             Button { text = "" } label: {
                 Image(systemName: "xmark.circle.fill")
@@ -277,19 +290,16 @@ private extension AppTextField {
     
     @ViewBuilder
     var inputGroup: some View {
-        // Safe binding unwrapping helper context
-        let boundFocus = focusState ?? FocusState<ID?>().projectedValue
-        
         switch type {
         case .password:
             HStack {
                 if isHide {
                     SecureField("", text: $text)
-                        .focused(boundFocus, equals: fieldIdentity)
+                        .applyOptionalFocus(focusState, equals: fieldIdentity)
                         .applyFieldAttributes(type)
                 } else {
                     TextField("", text: $text)
-                        .focused(boundFocus, equals: fieldIdentity)
+                        .applyOptionalFocus(focusState, equals: fieldIdentity)
                         .applyFieldAttributes(type)
                 }
                 
@@ -312,7 +322,7 @@ private extension AppTextField {
             
         default:
             TextField("", text: $text)
-                .focused(boundFocus, equals: fieldIdentity)
+                .applyOptionalFocus(focusState, equals: fieldIdentity)
                 .submitLabel(isLastField ? .done : .next)
                 .onSubmit { onNext?() }
                 .applyFieldAttributes(type)
@@ -329,6 +339,20 @@ private extension AppTextField {
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .padding(.horizontal, 4)
             }
+        }
+    }
+}
+
+// MARK: - Conditional Focus Structural Optimization Extension
+private extension View {
+    /// Safely binds an optional `FocusState` projection target context only if both parameters are explicitly supplied.
+    /// Prevents run-time generation layout loops when handling decoupled optional fields.
+    @ViewBuilder
+    func applyOptionalFocus<ID: Hashable>(_ binding: FocusState<ID?>.Binding?, equals value: ID?) -> some View {
+        if let binding = binding, let value = value {
+            self.focused(binding, equals: value)
+        } else {
+            self
         }
     }
 }

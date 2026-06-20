@@ -36,6 +36,13 @@ public final class UserDefaultManager: ObservableObject {
     @Storage(key: .isOnboard, defaultValue: false)
     public var isOnboard: Bool
     
+    /// Tracks whether the user has login or not.
+    ///
+    /// Changes to this property automatically serialize directy to disk and emit updates
+    /// to observing SwiftUI views.
+    @Storage(key: .isLogin, defaultValue: false)
+    public var isLogin: Bool
+    
     // MARK: - Methods
     
     /// Generic function to encode and persist any `Encodable` value into local storage.
@@ -50,18 +57,24 @@ public final class UserDefaultManager: ObservableObject {
         storage.set(data, forKey: key.rawValue)
     }
     
-    /// Generic function to fetch and decode a stored value from the user default storage.
+    /// Generic function to fetch and decode a stored value that might be missing, returning an optional.
     ///
-    /// This method includes a built-in safety net that returns a fallback value if no record
-    /// exists or if decoding fails, eliminating the need to handle optional values in your business logic.
+    /// Use this method when a fallback default value does not make semantic sense (e.g., retrieving an optional active session user profile).
     ///
-    /// - Parameters:
-    ///   - key: The type-safe `StorageKeys` enum case used to locate the value.
-    ///   - defaultValue: The fallback value returned if no data is found on disk or decoding fails.
-    /// - Returns: The expected deserialized object of type `T`, or the provided `defaultValue`.
-    public func fetch<T: Decodable>(forKey key: StorageKeys, defaultValue: T) -> T {
-        guard let data = storage.data(forKey: key.rawValue) else { return defaultValue }
-        let decodedValue = try? JSONDecoder().decode(T.self, from: data)
-        return decodedValue ?? defaultValue
+    /// - Parameter key: The type-safe `StorageKeys` enum case used to locate the value.
+    /// - Returns: The expected deserialized object of type `T`, or `nil` if no data is found or decoding fails.
+    public func fetchOptional<T: Decodable>(forKey key: StorageKeys) -> T? {
+        guard let data = storage.data(forKey: key.rawValue) else { return nil }
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
+    
+    /// Removes the stored value associated with the specified type-safe key from persistence.
+    ///
+    /// Use this method to clear data dynamically (e.g., erasing a cached user profile during logout).
+    /// If the key does not exist on disk, this operation performs no action safely.
+    ///
+    /// - Parameter key: The type-safe `StorageKeys` enum case to be removed from storage.
+    public func remove(forKey key: StorageKeys) {
+        storage.removeObject(forKey: key.rawValue)
     }
 }
